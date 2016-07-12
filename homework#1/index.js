@@ -63,57 +63,68 @@ let getArrayMethods = function() {
             return newArray;
         },
         reduce: function(/*source, callback, initialValue*/) {
-            var source = arguments[0],
-                callback = arguments[1],
-                sourceLength = source.length,
+            var source = '',
+                sourceLength = 0,
+                callback = '',
+                initialValue = false,
                 i = 0,
-                previousValue = '',
                 result = '';
 
-            if (sourceLength === 0 && !arguments[2]) {
-                throw new TypeError('Для пустого массива необходимо указать начальное значение.');
+            // Проверим является ли первый параметр массивом
+            if (Array.isArray(arguments[0])) {
+
+                source = arguments[0];
+                sourceLength = source.length;
+
+            } else {
+
+                throw new Error('Первый параметр должен быть массивом');
+
             }
 
-            if (typeof callback !== 'function') {
+            // Проверим является ли второй параметр функцией
+            if (typeof arguments[1] === 'function') {
+
+                callback = arguments[1];
+
+            } else {
+
                 throw new TypeError(callback + ' не является функцией');
-            }
-
-            previousValue = arguments[2] ? arguments[2] : 0;
-
-            if (sourceLength > 1) {
-
-                for (i; i < sourceLength; i++) {
-
-                    if (source[i] !== undefined) {
-
-                        if (i === 0) {
-
-                            result = callback(previousValue, source[i], i, source)
-
-                        } else {
-
-                            result = callback(result, source[i], i, source)
-
-                        }
-
-                    }
-
-                }
 
             }
 
-            if (sourceLength === 1 && !arguments[2]) {
+            // Проверим установлено ли начальное значение
+            if (arguments[2]) {
+
+                initialValue = arguments[2];
+
+            }
+
+            // Проверим установлено ли начальное значение если массив пустой
+            if (sourceLength === 0 && !initialValue) {
+
+                throw new TypeError('Для пустого массива необходимо указать начальное значение.');
+
+            }
+
+            // Если начальное значение не установлено, то начальное значение - первый элемент массива
+            if (initialValue) {
+
+                result = initialValue;
+
+            } else {
 
                 result = source[0];
+                i = i + 1;
 
             }
 
-            if (sourceLength === 0 && arguments[2]) {
 
-                result = arguments[2];
+            for (i; i < sourceLength; i++) {
+
+                result = callback(result, source[i], i, source);
 
             }
-
 
             return result;
         }
