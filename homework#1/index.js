@@ -6,6 +6,10 @@ let getArrayMethods = function() {
             var sourceLength = source.length,
                 i = 0;
 
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+
             for (i; i < sourceLength; i++) {
 
                 if (source[i] !== undefined) {
@@ -18,6 +22,10 @@ let getArrayMethods = function() {
             var sourceLength = source.length,
                 i = 0,
                 newArray = [];
+
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
 
             for (i; i < sourceLength; i++) {
 
@@ -38,6 +46,10 @@ let getArrayMethods = function() {
                 i = 0,
                 newArray = [];
 
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+
             for (i; i < sourceLength; i++) {
 
                 if (source[i] !== undefined) {
@@ -49,6 +61,9 @@ let getArrayMethods = function() {
             }
 
             return newArray;
+        },
+        reduce: function() {
+            
         }
     };
 };
