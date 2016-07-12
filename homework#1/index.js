@@ -21,6 +21,7 @@ let getArrayMethods = function() {
         filter: function(source, callback) {
             var sourceLength = source.length,
                 i = 0,
+                n = 0,
                 newArray = [];
 
             if (typeof callback !== 'function') {
@@ -32,7 +33,10 @@ let getArrayMethods = function() {
                 if (source[i] !== undefined) {
 
                     if (callback(source[i], i, source)) {
-                        newArray.push(source[i]);
+
+                        newArray[n] = source[i];
+                        n++;
+                        
                     }
 
                 }
@@ -44,6 +48,7 @@ let getArrayMethods = function() {
         map: function(source, callback) {
             var sourceLength = source.length,
                 i = 0,
+                n = 0,
                 newArray = [];
 
             if (typeof callback !== 'function') {
@@ -53,8 +58,9 @@ let getArrayMethods = function() {
             for (i; i < sourceLength; i++) {
 
                 if (source[i] !== undefined) {
-
-                    newArray.push(callback(source[i], i, source));
+                    
+                    newArray[n] = callback(source[i], i, source);
+                    n++;
 
                 }
 
@@ -62,7 +68,7 @@ let getArrayMethods = function() {
 
             return newArray;
         },
-        reduce: function(/*source, callback, initialValue*/) {
+        reduce: function() {
             var source = '',
                 sourceLength = 0,
                 callback = '',
