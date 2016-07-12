@@ -58,7 +58,7 @@ let getArrayMethods = function() {
             for (i; i < sourceLength; i++) {
 
                 if (source[i] !== undefined) {
-                    
+
                     newArray[n] = callback(source[i], i, source);
                     n++;
 
@@ -133,6 +133,83 @@ let getArrayMethods = function() {
             }
 
             return result;
+        },
+        splice: function() {
+            var __that = this,
+                method = {
+                params: arguments,
+                source: '',
+                sourceLength: '',
+
+                setUpValues: function() {
+                    var paramsLength = this.params.length;
+
+                    // Проверим является ли первый параметр массивом
+                    if (Array.isArray(this.params[0])) {
+
+                        this.source = this.params[0];
+                        this.sourceLength = this.source.length;
+
+                    } else {
+
+                        throw new Error('Первый параметр должен быть массивом');
+
+                    }
+
+                    // Если 3 параметра - удаляем значения из массива
+                    if (paramsLength === 3) {
+
+                        this.deleteValues();
+
+                    }
+
+
+
+
+                },
+                deleteValues: function() {
+                    console.log('удаление');
+                    var startIndex = this.params[1],
+                        endIndex = this.params[2],
+                        i = startIndex;
+
+                    // Удаляем элементы
+                    for (i; i < endIndex; i++) {
+
+                        delete this.source[i];
+
+                    }
+
+                    // Удаляем пустые элементы передвигая остальные элементы влево на величину пустых элементов
+                    this.deleteEmptyValues(0);
+                    // this.source.length = this.source.length - 1
+                },
+                deleteEmptyValues: function(index) {
+                    var current = '',
+                        next = '';
+
+                    if (index < this.source.length) {
+
+                        current = this.source[index];
+                        next = this.source[index + 1];
+
+                        if (current === undefined) {
+
+                            this.source[index] = next;
+                            this.source.length = this.source.length - 1;
+
+                        }
+
+                        this.deleteEmptyValues(++index);
+
+                    }
+                },
+                init: function() {
+                    this.setUpValues();
+                }
+            };
+
+            method.init();
         }
     };
 };

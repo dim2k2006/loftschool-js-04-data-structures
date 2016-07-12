@@ -16,11 +16,19 @@ var sum = function(previousValue, currentValue, index, array) {
     return previousValue + currentValue;
 };
 
-var array = [1, 2, 3, 4, 5, 6];
+// var array = [1, 2, 3, 4, 5, 6];
+var array = ["Я", "изучаю", "JavaScript"];
 
 // console.log(arrayMethods.forEach(array, log));
 // console.log(arrayMethods.filter(array, biggerThan));
 // console.log(arrayMethods.map(array, square));
 // console.log(arrayMethods.reduce(array, sum));
+// console.log(arrayMethods.splice(array));
+
+
+
+arrayMethods.splice(array, 0, 2);
+
+console.log(array);
 
 
