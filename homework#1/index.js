@@ -32,6 +32,23 @@ let getArrayMethods = function() {
             }
 
             return newArray;
+        },
+        map: function(source, callback) {
+            var sourceLength = source.length,
+                i = 0,
+                newArray = [];
+
+            for (i; i < sourceLength; i++) {
+
+                if (source[i] !== undefined) {
+
+                    newArray.push(callback(source[i], i, source));
+
+                }
+
+            }
+
+            return newArray;
         }
     };
 };
