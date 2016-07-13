@@ -23,18 +23,4 @@ var array = ["Я", "сейчас", "изучаю", "JavaScript"];
 // console.log(arrayMethods.filter(array, biggerThan));
 // console.log(arrayMethods.map(array, square));
 // console.log(arrayMethods.reduce(array, sum));
-
-console.log(arrayMethods.slice(array, -3, 2));
-
-
-
-
-// var arr2 = array.slice(1, 6);
-//
-// console.log(arr2);
-
-
-
-// console.log(arrayMethods.splice(array, 0, 2));
-
-
+// console.log(arrayMethods.slice(array, -2, 3));

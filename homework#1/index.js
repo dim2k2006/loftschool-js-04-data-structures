@@ -182,20 +182,28 @@ let getArrayMethods = function() {
 
             }
 
-            // Если передано 3 параметра копирует участок массива от begin до end, не включая end
-            if (paramsLength === 3) {
+            // Если передано 3 параметра и end положительный, копирует участок массива от begin до end, не включая end
+            if (paramsLength === 3 && arguments[1] >= 0) {
 
                 i = arguments[1];
                 length = arguments[2];
 
-                if (sourceLength - i - length < 0) {
-                    length = sourceLength;
+                for (i; i < length; i++) {
+
+                    result[n] = source[i];
+                    n++
+
                 }
 
-                if (i < 0) {
-                    i = (i*(-1) > sourceLength) ? 0 : sourceLength + i;
-                    length = sourceLength - i + 1;
-                }
+            }
+
+            // Если передано 3 параметра и end отрицательный, копирует участок массива от begin до end, не включая end
+            if (paramsLength === 3 && arguments[1] < 0) {
+
+                i = arguments[1];
+
+                i = (i*(-1) > sourceLength) ? 0 : sourceLength + i;
+                length = (arguments[2] > sourceLength) ? sourceLength : arguments[2];
 
                 for (i; i < length; i++) {
 
