@@ -27,8 +27,9 @@ var array = ["Я", "изучаю", "JavaScript"];
 
 
 
-arrayMethods.splice(array, 0, 2);
+var deleted = arrayMethods.splice(array, 0, 1);
 
 console.log(array);
+console.log(deleted);
 
 
