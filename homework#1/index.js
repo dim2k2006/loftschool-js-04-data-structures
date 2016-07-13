@@ -219,128 +219,128 @@ let getArrayMethods = function() {
         splice: function() {
             var __this = this,
                 method = {
-                params: arguments,
-                source: '',
-                sourceLength: '',
-                result: '',
+                    params: arguments,
+                    source: '',
+                    sourceLength: '',
+                    result: '',
 
-                setUpValues: function() {
-                    var paramsLength = this.params.length;
+                    setUpValues: function() {
+                        var paramsLength = this.params.length;
 
-                    // Проверим является ли первый параметр массивом
-                    if (Array.isArray(this.params[0])) {
+                        // Проверим является ли первый параметр массивом
+                        if (Array.isArray(this.params[0])) {
 
-                        this.source = this.params[0];
-                        this.sourceLength = this.source.length;
+                            this.source = this.params[0];
+                            this.sourceLength = this.source.length;
 
-                    } else {
+                        } else {
 
-                        throw new Error('Первый параметр должен быть массивом');
+                            throw new Error('Первый параметр должен быть массивом');
 
-                    }
+                        }
 
-                    // Если три параметра - удаляем значения из массива
-                    if (paramsLength === 3) {
+                        // Если три параметра - удаляем значения из массива
+                        if (paramsLength === 3) {
 
-                        this.deleteValues();
+                            this.deleteValues();
 
-                    }
+                        }
 
-                    // Если больше трех параметров и третий параметр не равен нулю, то удаляем значения с заменой
-                    if (paramsLength > 3 && this.params[2] > 0) {
+                        // Если больше трех параметров и третий параметр не равен нулю, то удаляем значения с заменой
+                        if (paramsLength > 3 && this.params[2] > 0) {
 
-                        this.deleteValues();
-                        this.deleteWithReplace();
+                            this.deleteValues();
+                            this.deleteWithReplace();
 
-                    }
+                        }
 
 
 
-                },
-                deleteWithReplace: function() {
-                    // cначала вставить элементы после последнего указанного индекса а потом удалить переданные индексы
+                    },
+                    deleteWithReplace: function() {
+                        // cначала вставить элементы после последнего указанного индекса а потом удалить переданные индексы
 
-                    var startIndex = this.params[1],
-                        i = 0,
-                        n = 3,
-                        k = 0,
-                        paramsLength = this.params.length - 3,
-                        paramsArray = [],
-                        tmp = [],
-                        tmpLength = 0;
+                        var startIndex = this.params[1],
+                            i = 0,
+                            n = 3,
+                            k = 0,
+                            paramsLength = this.params.length - 3,
+                            paramsArray = [],
+                            tmp = [],
+                            tmpLength = 0;
 
-                    paramsArray.length = paramsLength;
+                        paramsArray.length = paramsLength;
 
-                    for (i; i < paramsLength; i++) {
+                        for (i; i < paramsLength; i++) {
 
-                        paramsArray[i] = this.params[n];
-                        n++
+                            paramsArray[i] = this.params[n];
+                            n++
 
-                    }
+                        }
 
-                    tmpLength = this.source.length + paramsLength;
+                        tmpLength = this.source.length + paramsLength;
 
-                    if (startIndex !== 0) {
+                        if (startIndex !== 0) {
 
-                        for (k; k < tmpLength; k++) {
+                            for (k; k < tmpLength; k++) {
+
+
+
+                            }
+
+                        } else {
 
 
 
                         }
 
-                    } else {
 
 
+                        console.log(startIndex);
+                        console.log(paramsLength);
+                        console.log(paramsArray);
+                        console.log(tmpLength);
+                        console.log(this.source);
+                    },
+                    deleteValues: function() {
+                        var startIndex = this.params[1],
+                            endIndex = startIndex + this.params[2],
+                            i = startIndex,
+                            n = 0,
+                            k = 0,
+                            tmp = [],
+                            tmpLength = 0,
+                            newArray = [];
 
+                        for (i; i < endIndex; i++) {
+
+                            newArray[n] = this.source[i];
+                            delete this.source[i];
+
+                            n++;
+
+                        }
+
+                        tmp = __this.filter(this.source, function(value) {
+                            return value !== undefined
+                        });
+
+                        tmpLength = tmp.length;
+
+                        this.source.length = tmpLength;
+
+                        for (k; k < tmpLength; k++) {
+                            this.source[k] = tmp[k];
+                        }
+
+                        this.result = newArray;
+                    },
+                    init: function() {
+                        this.setUpValues();
+
+                        return this.result;
                     }
-
-
-
-                    console.log(startIndex);
-                    console.log(paramsLength);
-                    console.log(paramsArray);
-                    console.log(tmpLength);
-                    console.log(this.source);
-                },
-                deleteValues: function() {
-                    var startIndex = this.params[1],
-                        endIndex = startIndex + this.params[2],
-                        i = startIndex,
-                        n = 0,
-                        k = 0,
-                        tmp = [],
-                        tmpLength = 0,
-                        newArray = [];
-
-                    for (i; i < endIndex; i++) {
-
-                        newArray[n] = this.source[i];
-                        delete this.source[i];
-
-                        n++;
-
-                    }
-
-                    tmp = __this.filter(this.source, function(value) {
-                        return value !== undefined
-                    });
-
-                    tmpLength = tmp.length;
-
-                    this.source.length = tmpLength;
-
-                    for (k; k < tmpLength; k++) {
-                        this.source[k] = tmp[k];
-                    }
-
-                    this.result = newArray;
-                },
-                init: function() {
-                    this.setUpValues();
-
-                    return this.result;
-                }
-            };
+                };
 
             return method.init();
         }
