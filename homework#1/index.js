@@ -171,7 +171,7 @@ let getArrayMethods = function() {
             return result;
         },
         slice: function() {
-            var source = '',
+            let source = '',
                 sourceLength = 0,
                 paramsLength = 0,
                 i = 0,
