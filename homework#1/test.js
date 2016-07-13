@@ -17,7 +17,7 @@ var sum = function(previousValue, currentValue, index, array) {
 };
 
 // var array = [1, 2, 3, 4, 5, 6];
-var array = ["Я", "изучаю", "JavaScript"];
+var array = ["Я", "сейчас", "изучаю", "JavaScript"];
 
 // console.log(arrayMethods.forEach(array, log));
 // console.log(arrayMethods.filter(array, biggerThan));
@@ -25,11 +25,22 @@ var array = ["Я", "изучаю", "JavaScript"];
 // console.log(arrayMethods.reduce(array, sum));
 // console.log(arrayMethods.splice(array));
 
+console.log(`Old array: ${array}`);
+
+var deleted = arrayMethods.splice(array, 0, 5);
+
+console.log(`News array: ${array}`);
+console.log(`Deleted: ${deleted}`);
 
 
-var deleted = arrayMethods.splice(array, 0, 1);
 
-console.log(array);
-console.log(deleted);
 
+// var deleted = arrayMethods.splice(array, 0, 3, 'Мы', 'изучаем');
+
+// console.log(array);
+// console.log(deleted);
+
+// console.log(`Old array: ${array}`);
+// console.log(`Deleted: ${array.splice(0, 5)}`);
+// console.log(`News array: ${array}`);
 

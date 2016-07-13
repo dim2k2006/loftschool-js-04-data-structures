@@ -135,7 +135,8 @@ let getArrayMethods = function() {
             return result;
         },
         splice: function() {
-            var method = {
+            var __this = this,
+                method = {
                 params: arguments,
                 source: '',
                 sourceLength: '',
@@ -156,16 +157,29 @@ let getArrayMethods = function() {
 
                     }
 
-                    // Если 3 параметра - удаляем значения из массива
+                    // Если три параметра - удаляем значения из массива
                     if (paramsLength === 3) {
 
                         this.deleteValues();
-                        this.deleteEmptyValues();
+                        // this.deleteEmptyValues();
 
                     }
 
+                    // Если больше трех параметров и третий параметр не равен нулю, то удаляем значения с заменой
+                    // if (paramsLength > 3 && this.params[2] > 0) {
+                    //
+                    //     this.deleteValues();
+                    //     this.deleteEmptyValues();
+                    //     this.deleteWithReplace();
+                    //
+                    // }
 
 
+
+                },
+                deleteWithReplace: function() {
+
+                    console.log('удаление с заменой')
 
                 },
                 deleteValues: function() {
@@ -173,6 +187,9 @@ let getArrayMethods = function() {
                         endIndex = startIndex + this.params[2],
                         i = startIndex,
                         n = 0,
+                        k = 0,
+                        tmp = [],
+                        tmpLength = 0,
                         newArray = [];
 
                     for (i; i < endIndex; i++) {
@@ -184,41 +201,53 @@ let getArrayMethods = function() {
 
                     }
 
+                    tmp = __this.filter(this.source, function(value) {
+                        return value !== undefined
+                    });
+
+                    tmpLength = tmp.length;
+
+                    this.source.length = tmpLength;
+
+                    for (k; k < tmpLength; k++) {
+                        this.source[k] = tmp[k];
+                    }
+
                     this.result = newArray;
                 },
-                deleteEmptyValues: function() {
-                    var sourceLength = '',
-                        n = 0,
-                        i = 0;
-
-
-                    while (n < this.source.length) {
-
-                        if (this.source[n] === undefined) {
-
-                            this.offset(n, this.source.length);
-
-                            n = 0;
-
-                        } else {
-
-                            n++
-
-                        }
-
-                    }
-                },
-                offset: function(startIndex, length) {
-                    var i = startIndex;
-
-                    for (i; i < length - 1; i++) {
-
-                        this.source[i] = this.source[i + 1];
-
-                    }
-
-                    this.source.length = this.source.length - 1;
-                },
+                // deleteEmptyValues: function() {
+                //     var sourceLength = '',
+                //         n = 0,
+                //         i = 0;
+                //
+                //
+                //     while (n < this.source.length) {
+                //
+                //         if (this.source[n] === undefined) {
+                //
+                //             this.offset(n, this.source.length);
+                //
+                //             n = 0;
+                //
+                //         } else {
+                //
+                //             n++
+                //
+                //         }
+                //
+                //     }
+                // },
+                // offset: function(startIndex, length) {
+                //     var i = startIndex;
+                //
+                //     for (i; i < length - 1; i++) {
+                //
+                //         this.source[i] = this.source[i + 1];
+                //
+                //     }
+                //
+                //     this.source.length = this.source.length - 1;
+                // },
                 init: function() {
                     this.setUpValues();
 
