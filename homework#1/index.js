@@ -134,6 +134,80 @@ let getArrayMethods = function() {
 
             return result;
         },
+        slice: function() {
+            var source = '',
+                sourceLength = 0,
+                paramsLength = 0,
+                i = 0,
+                n = 0,
+                length = 0,
+                result = [];
+
+            // Проверим является ли первый параметр массивом
+            if (Array.isArray(arguments[0])) {
+
+                source = arguments[0];
+                sourceLength = source.length;
+
+            } else {
+
+                throw new Error('Первый параметр должен быть массивом');
+
+            }
+
+            paramsLength = arguments.length;
+
+            // Если вообще не указать аргументов – скопируется весь массив
+            if (paramsLength === 1) {
+
+                result = source;
+
+            }
+
+            // Если не указать end – копирование будет до конца массива (можно использовать отрицательные индексы, они отсчитываются с конца)
+            if (paramsLength === 2) {
+
+                i = arguments[1];
+
+                if (i < 0) {
+                    i = (i*(-1) > sourceLength) ? 0 : sourceLength + i;
+                }
+
+                for (i; i < sourceLength; i++) {
+
+                    result[n] = source[i];
+                    n++
+
+                }
+
+            }
+
+            // Если передано 3 параметра копирует участок массива от begin до end, не включая end
+            if (paramsLength === 3) {
+
+                i = arguments[1];
+                length = arguments[2];
+
+                if (sourceLength - i - length < 0) {
+                    length = sourceLength;
+                }
+
+                if (i < 0) {
+                    i = (i*(-1) > sourceLength) ? 0 : sourceLength + i;
+                    length = sourceLength - i + 1;
+                }
+
+                for (i; i < length; i++) {
+
+                    result[n] = source[i];
+                    n++
+
+                }
+
+            }
+
+            return result;
+        },
         splice: function() {
             var __this = this,
                 method = {
@@ -161,26 +235,64 @@ let getArrayMethods = function() {
                     if (paramsLength === 3) {
 
                         this.deleteValues();
-                        // this.deleteEmptyValues();
 
                     }
 
                     // Если больше трех параметров и третий параметр не равен нулю, то удаляем значения с заменой
-                    // if (paramsLength > 3 && this.params[2] > 0) {
-                    //
-                    //     this.deleteValues();
-                    //     this.deleteEmptyValues();
-                    //     this.deleteWithReplace();
-                    //
-                    // }
+                    if (paramsLength > 3 && this.params[2] > 0) {
+
+                        this.deleteValues();
+                        this.deleteWithReplace();
+
+                    }
 
 
 
                 },
                 deleteWithReplace: function() {
+                    // cначала вставить элементы после последнего указанного индекса а потом удалить переданные индексы
 
-                    console.log('удаление с заменой')
+                    var startIndex = this.params[1],
+                        i = 0,
+                        n = 3,
+                        k = 0,
+                        paramsLength = this.params.length - 3,
+                        paramsArray = [],
+                        tmp = [],
+                        tmpLength = 0;
 
+                    paramsArray.length = paramsLength;
+
+                    for (i; i < paramsLength; i++) {
+
+                        paramsArray[i] = this.params[n];
+                        n++
+
+                    }
+
+                    tmpLength = this.source.length + paramsLength;
+
+                    if (startIndex !== 0) {
+
+                        for (k; k < tmpLength; k++) {
+
+
+
+                        }
+
+                    } else {
+
+
+
+                    }
+
+
+
+                    console.log(startIndex);
+                    console.log(paramsLength);
+                    console.log(paramsArray);
+                    console.log(tmpLength);
+                    console.log(this.source);
                 },
                 deleteValues: function() {
                     var startIndex = this.params[1],
@@ -215,39 +327,6 @@ let getArrayMethods = function() {
 
                     this.result = newArray;
                 },
-                // deleteEmptyValues: function() {
-                //     var sourceLength = '',
-                //         n = 0,
-                //         i = 0;
-                //
-                //
-                //     while (n < this.source.length) {
-                //
-                //         if (this.source[n] === undefined) {
-                //
-                //             this.offset(n, this.source.length);
-                //
-                //             n = 0;
-                //
-                //         } else {
-                //
-                //             n++
-                //
-                //         }
-                //
-                //     }
-                // },
-                // offset: function(startIndex, length) {
-                //     var i = startIndex;
-                //
-                //     for (i; i < length - 1; i++) {
-                //
-                //         this.source[i] = this.source[i + 1];
-                //
-                //     }
-                //
-                //     this.source.length = this.source.length - 1;
-                // },
                 init: function() {
                     this.setUpValues();
 
