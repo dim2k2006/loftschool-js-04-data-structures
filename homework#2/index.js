@@ -1,41 +1,120 @@
 var deepEqual = function(sourceA, sourceB) {
-    for (key in sourceA) {
+    var equal = {
+        result: true,
 
-        if (sourceA.hasOwnProperty(key) && sourceB.hasOwnProperty(key)) {
+        find: function(sourceA, sourceB) {
+            this.findDirect(sourceA, sourceB);
+            this.findReverse(sourceB, sourceA);
 
-            // Проверим являются ли значения ключей объектами
-            if (sourceA[key] instanceof Object && !(sourceA[key] instanceof Array)) {
+            return this.result;
+        },
+        findDirect: function(sourceA, sourceB) {
+            for (key in sourceA) {
 
-                deepEqual(sourceA[key],  sourceB[key]);
+                if (sourceA.hasOwnProperty(key) && sourceB.hasOwnProperty(key)) {
+
+                    // Проверим являются ли значения ключей объектами
+                    if (sourceA[key] instanceof Object && !(sourceA[key] instanceof Array)) {
+
+                        this.findDirect(sourceA[key],  sourceB[key]);
+
+                    }
+
+                    // Проверим являются ли значения ключей массивами
+                    if (Array.isArray(sourceA[key]) && Array.isArray(sourceB[key])) {
+
+                        this.findDirect(sourceA[key],  sourceB[key]);
+
+                    }
+
+                    // Проверим являются ли значения ключей датами
+                    if (sourceA[key] instanceof Date && sourceB[key] instanceof Date) {
+
+                        if (sourceA[key].getTime() !== sourceB[key].getTime()) {
+
+                            this.result = false;
+
+                        }
+
+                    }
+
+                    // Проверим равны ли значение ключей между собой
+                    if (sourceA[key] !== sourceB[key]) {
+
+                        if (!(sourceA[key] instanceof Date) && !(sourceB[key] instanceof Date)) {
+
+                            console.log('direct not equal');
+                            console.log(sourceA[key]);
+                            console.log(sourceB[key]);
+                            this.result = false;
+
+                        }
+
+                    }
+
+                } else {
+
+                    this.result = false;
+
+                }
 
             }
+        },
+        findReverse: function(sourceA, sourceB) {
+            for (key in sourceA) {
 
-            // Проверим являются ли значения ключей массивами
-            if (Array.isArray(sourceA[key]) && Array.isArray(sourceB[key])) {
+                if (sourceA.hasOwnProperty(key) && sourceB.hasOwnProperty(key)) {
 
-                deepEqual(sourceA[key],  sourceB[key]);
+                    // Проверим являются ли значения ключей объектами
+                    if (sourceA[key] instanceof Object && !(sourceA[key] instanceof Array)) {
+
+                        this.findDirect(sourceA[key],  sourceB[key]);
+
+                    }
+
+                    // Проверим являются ли значения ключей массивами
+                    if (Array.isArray(sourceA[key]) && Array.isArray(sourceB[key])) {
+
+                        this.findDirect(sourceA[key],  sourceB[key]);
+
+                    }
+
+                    // Проверим являются ли значения ключей датами
+                    if (sourceA[key] instanceof Date && sourceB[key] instanceof Date) {
+
+                        if (sourceA[key].getTime() !== sourceB[key].getTime()) {
+
+                            this.result = false;
+
+                        }
+
+                    }
+
+                    // Проверим равны ли значение ключей между собой
+                    if (sourceA[key] !== sourceB[key]) {
+
+                        if (!(sourceA[key] instanceof Date) && !(sourceB[key] instanceof Date)) {
+
+                            console.log('reverse not equal');
+                            console.log(sourceA[key]);
+                            console.log(sourceB[key]);
+                            this.result = false;
+
+                        }
+
+                    }
+
+                } else {
+
+                    this.result = false;
+
+                }
 
             }
-
-            // Проверим равны ли значение ключей между собой
-            if (sourceA[key] !== sourceB[key]) {
-
-                console.log('not equal');
-                console.log(sourceA[key]);
-                console.log(sourceB[key]);
-                return false;
-
-            }
-
-        } else {
-
-            return false;
-
         }
+    };
 
-    }
-
-    return true;
+    return equal.find(sourceA, sourceB);
 };
 
 var objA = {
@@ -50,7 +129,7 @@ var objA = {
         }
     },
     prop5: 1000,
-    // prop6: new Date(2016, 2, 10)
+    prop6: new Date(2016, 2, 10)
 };
 
 var objB = {
@@ -58,11 +137,11 @@ var objB = {
     prop3: 'value3',
     prop1: 'value1',
     prop2: 'value2',
-    // prop6: new Date('2016/03/10'),
+    prop6: new Date('2016/03/10'),
     prop4: {
         subProp2: {
             subSubProp1: 'sub sub value1',
-            subSubProp2: [1, 2, {prop2: 1, prop: 2}, 4, 7]
+            subSubProp2: [1, 2, {prop2: 1, prop: 2}, 4, 5]
         },
         subProp1: 'sub value1'
     }
