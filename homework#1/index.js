@@ -3,9 +3,21 @@
 let getArrayMethods = function() {
     return {
         forEach: function(source, callback) {
-            var sourceLength = source.length,
+            let sourceLength = '',
                 i = 0;
 
+            // Проверим является ли первый параметр массивом
+            if (Array.isArray(source)) {
+
+                sourceLength = source.length;
+
+            } else {
+
+                throw new Error('Первый параметр должен быть массивом');
+
+            }
+
+            // Проверим является ли второй параметр функцией
             if (typeof callback !== 'function') {
                 throw new TypeError(callback + ' не является функцией');
             }
