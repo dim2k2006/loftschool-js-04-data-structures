@@ -105,7 +105,7 @@ let getArrayMethods = function() {
             return newArray;
         },
         reduce: function() {
-            var source = '',
+            let source = '',
                 sourceLength = 0,
                 callback = '',
                 initialValue = false,
